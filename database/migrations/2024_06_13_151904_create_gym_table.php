@@ -11,9 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('gym', function (Blueprint $table) {
+        Schema::create('presensi', function (Blueprint $table) {
             $table->id();
+            $table->dateTime('waktu_masuk');
+            $table->dateTime('waktu_keluar')->nullable();
+            $table->unsignedBigInteger('user_id');  // Create a foreign key column
             $table->timestamps();
+
+            // Define the foreign key constraint
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -22,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('gym');
+        Schema::dropIfExists('presensi');
     }
 };
